@@ -178,19 +178,58 @@ Before training models, statistical differences between benign and malicious dom
 - Consecutive consonants appeared frequently in malicious domains
 
 ---
-
-## Class Distribution
+# Class Distribution
 
 <p align="center">
-  <img src="01_class_distribution.png" width="700">
+  <img src="./01_class_distribution.jpeg" width="700">
 </p>
 
 ---
 
-## Domain Length & Entropy Analysis
+# Domain Length & Entropy Analysis
 
 <p align="center">
-  <img src="02_eda_length_entropy.png" width="900">
+  <img src="./02_eda_length_entropy.jpeg" width="900">
+</p>
+
+---
+
+# PCA Variance Analysis
+
+<p align="center">
+  <img src="./03_pca_variance.jpeg" width="750">
+</p>
+
+---
+
+# Confusion Matrix Comparison
+
+<p align="center">
+  <img src="./04_confusion_matrices.jpeg" width="950">
+</p>
+
+---
+
+# PCA vs Full Feature Comparison
+
+<p align="center">
+  <img src="./05_pca_comparison.jpeg" width="700">
+</p>
+
+---
+
+# Random Forest Feature Importance
+
+<p align="center">
+  <img src="./06_feature_importance.jpeg" width="700">
+</p>
+
+---
+
+# F1 Score Heatmap
+
+<p align="center">
+  <img src="./07_f1_heatmap.jpeg" width="750">
 </p>
 
 ---
