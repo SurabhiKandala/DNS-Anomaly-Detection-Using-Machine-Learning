@@ -478,6 +478,25 @@ Even without DNS traffic analysis or packet captures, the models successfully di
 The project combines practical machine learning workflows with real-world cybersecurity threat detection concepts relevant to SOC operations and blue team environments.
 
 ---
+# Presentation
+
+📺 Full Project Presentation & Walkthrough:
+
+[![Watch the Presentation](https://img.shields.io/badge/YouTube-Project%20Presentation-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=BRD8PHBkOSc)
+
+This presentation covers:
+
+- Project overview
+- DGA threat explanation
+- Dataset collection
+- Feature engineering
+- Exploratory Data Analysis (EDA)
+- PCA analysis
+- Model training & evaluation
+- Feature importance analysis
+- Final results & findings
+
+---
 
 # References
 
