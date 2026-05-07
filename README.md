@@ -488,10 +488,4 @@ The project combines practical machine learning workflows with real-world cybers
 
 ---
 
-# Author
-
-## Surabhi Kandala  
-MS Cybersecurity — University of Houston
-
-LinkedIn | GitHub
 
