@@ -1,116 +1,37 @@
-# DNS-Anomaly-Detection-Using-Machine-Learning
-Machine learning pipeline for detecting DGA-generated malicious domains using lexical feature engineering, entropy analysis, and multi-model evaluation. Built with Python, Scikit-learn, and cybersecurity-focused ML techniques for DNS threat detection.
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.10-blue?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Scikit--learn-MachineLearning-orange?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Cybersecurity-ThreatDetection-red?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Status-Completed-success?style=for-the-badge">
-</p>
+# DNS Anomaly Detection Using Machine Learning
 
-<h1 align="center">DNS Anomaly Detection Using Machine Learning</h1>
-
-<p align="center">
-Machine Learning Pipeline for Detecting DGA-Generated Malicious Domains Using Lexical Feature Engineering and Cybersecurity-Focused ML Techniques
-</p>
-
----
-
-# University of Houston — MS Cybersecurity
-
-## Team: Analytics Shield
-
-### Team Members
-- Surabhi Kandala
-- Durga Sai Sri Ramireddy
-- Gurunivas Mudiraj
-
----
-
-# TL;DR
-
-Built a complete machine learning pipeline capable of identifying malicious DGA-generated domains using only the domain name itself.
-
-No packet captures.  
-No DNS traffic analysis.  
-No PCAP files.  
-
-Just the domain string.
-
-### Best Result
-```text
-ANN / MLP → ~90% F1 Score
-```
-
----
-
-# Table of Contents
-
-- Project Overview
-- The Problem
-- Dataset
-- Pipeline Architecture
-- Exploratory Data Analysis (EDA)
-- Feature Engineering
-- Data Preprocessing
-- PCA Analysis
-- Machine Learning Models
-- Model Results
-- Feature Importance Analysis
-- Key Findings
-- Skills Demonstrated
-- Tools & Technologies
-- Future Improvements
-- Getting Started
-- Conclusion
-- References
+Machine Learning Based DNS Threat Detection Using Lexical Feature Engineering and Cybersecurity Analytics
 
 ---
 
 # Project Overview
 
-This project focuses on detecting malicious DGA-generated domains using machine learning techniques.
+This project focuses on detecting malicious DGA-generated domains using Machine Learning techniques.
 
-Many malware families use Domain Generation Algorithms (DGAs) to generate thousands of random domain names daily for command-and-control communication. Since these domains constantly change, traditional blacklist-based detection becomes ineffective.
+Many malware families use Domain Generation Algorithms (DGAs) to continuously generate random-looking domains for command-and-control communication. Since these domains constantly change, traditional blacklist-based detection becomes less effective.
 
-Instead of analyzing DNS traffic or packet captures, this project identifies malicious domains purely from the lexical structure of the domain name itself.
+Instead of relying on packet captures or network traffic analysis, this project identifies suspicious domains directly from the domain name itself using lexical and statistical features.
+
+---
+
+# Why This Project Matters
+
+DGA-based malware is commonly used by attackers to maintain resilient communication channels while bypassing traditional domain blacklists.
+
+The goal of this project was to determine whether Machine Learning models could distinguish between:
+
+- Human-created legitimate domains
+- Algorithmically generated malicious domains
 
 ### Example
 
 ```text
-google.com         → Human-generated
+google.com         → Legitimate
+spotify.com        → Legitimate
 xkqzpwrtq.biz      → Possible DGA-generated
 ```
 
-The objective was to determine whether machine learning models could distinguish between human-created domains and algorithmically generated malicious domains.
-
----
-
-# Key Highlights
-
-✅ Built a complete cybersecurity ML pipeline  
-✅ Processed 70,000 DNS domains  
-✅ Extracted 8 lexical features from raw domain strings  
-✅ Trained and evaluated 4 machine learning models  
-✅ Achieved ~90% F1-score using ANN/MLP  
-✅ Performed EDA, PCA, feature importance analysis, and model comparison  
-
----
-
-# The Problem
-
-Modern malware frequently uses Domain Generation Algorithms (DGAs) to evade detection mechanisms.
-
-Instead of using a single fixed command-and-control server, malware continuously generates random domains to maintain attacker communication channels.
-
-Traditional blacklist-based approaches struggle because malicious domains constantly change.
-
-### Core Question
-
-```text
-Can machine learning determine whether a domain was created by a human or by an algorithm?
-```
-
-### MITRE ATT&CK Mapping
+MITRE ATT&CK Technique:
 
 ```text
 T1568 – Dynamic Resolution
@@ -118,11 +39,22 @@ T1568 – Dynamic Resolution
 
 ---
 
+# Project Goals
+
+- Build a DNS anomaly detection pipeline
+- Analyze malicious vs legitimate domain patterns
+- Extract meaningful lexical features
+- Train and evaluate multiple ML models
+- Compare model performance using F1-score
+- Identify features contributing most to DGA detection
+
+---
+
 # Dataset
 
-The dataset combined legitimate and malicious domain names.
+The dataset combined both legitimate and malicious domain names.
 
-| Source | Label | Count |
+| Dataset | Label | Count |
 |---|---|---|
 | Alexa Top Domains | Benign | 50,000 |
 | DGA Malware Domains | Malicious | 20,000 |
@@ -130,14 +62,28 @@ The dataset combined legitimate and malicious domain names.
 ### Total Dataset Size
 
 ```text
-70,000 domain names
+70,000 domains
 ```
 
-Class imbalance was intentionally preserved to better simulate real-world DNS traffic environments.
+The class imbalance was intentionally preserved to better represent real-world DNS traffic environments.
 
 ---
 
-# Pipeline Architecture
+# Technologies Used
+
+| Technology |
+|---|
+| Python |
+| Pandas |
+| NumPy |
+| Scikit-learn |
+| Matplotlib |
+| Seaborn |
+| Jupyter Notebook |
+
+---
+
+# Machine Learning Workflow
 
 ```text
 Raw Domain Names
@@ -146,16 +92,13 @@ Raw Domain Names
 Data Collection
         │
         ▼
-Exploratory Data Analysis
-        │
-        ▼
 Feature Engineering
         │
         ▼
-Preprocessing & Scaling
+Data Preprocessing
         │
         ▼
-PCA Analysis
+EDA & PCA Analysis
         │
         ▼
 Model Training
@@ -166,18 +109,47 @@ Performance Evaluation
 
 ---
 
+# Feature Engineering
+
+Each domain was transformed into numerical features suitable for Machine Learning models.
+
+## Extracted Features
+
+| Feature | Description |
+|---|---|
+| length | Domain length |
+| entropy | Shannon entropy |
+| consecutive_consonants | Longest consonant sequence |
+| unique_chars | Number of unique characters |
+| vowel_ratio | Percentage of vowels |
+| consonant_ratio | Percentage of consonants |
+| digit_ratio | Percentage of digits |
+| has_numbers | Presence of digits |
+
+---
+
+## Example Transformation
+
+```text
+google.com → google
+xkqzpwrt.ru → xkqzpwrt
+```
+
+---
+
 # Exploratory Data Analysis (EDA)
 
-Before training models, statistical differences between benign and malicious domains were analyzed.
+Before training the models, statistical differences between malicious and legitimate domains were analyzed.
 
-### Key Observations
+### Key Findings
 
 - DGA domains were generally longer
 - Malicious domains showed higher entropy
-- DGA domains contained more random character distributions
-- Consecutive consonants appeared frequently in malicious domains
+- Consecutive consonants appeared more frequently
+- DGA domains looked less human-readable
 
 ---
+
 # Class Distribution
 
 <p align="center">
@@ -194,83 +166,6 @@ Before training models, statistical differences between benign and malicious dom
 
 ---
 
-# PCA Variance Analysis
-
-<p align="center">
-  <img src="./03_pca_variance.jpeg" width="750">
-</p>
-
----
-
-# Confusion Matrix Comparison
-
-<p align="center">
-  <img src="./04_confusion_matrices.jpeg" width="950">
-</p>
-
----
-
-# PCA vs Full Feature Comparison
-
-<p align="center">
-  <img src="./05_pca_comparison.jpeg" width="700">
-</p>
-
----
-
-# Random Forest Feature Importance
-
-<p align="center">
-  <img src="./06_feature_importance.jpeg" width="700">
-</p>
-
----
-
-# F1 Score Heatmap
-
-<p align="center">
-  <img src="./07_f1_heatmap.jpeg" width="750">
-</p>
-
----
-
-# Feature Engineering
-
-Each domain was transformed into numerical features suitable for machine learning models.
-
-## Extracted Features
-
-| Feature | Description |
-|---|---|
-| length | Character count |
-| entropy | Shannon entropy |
-| consecutive_consonants | Longest consonant sequence |
-| unique_chars | Distinct character count |
-| vowel_ratio | Percentage of vowels |
-| consonant_ratio | Percentage of consonants |
-| digit_ratio | Percentage of digits |
-| has_numbers | Presence of numbers |
-
----
-
-## Example Transformation
-
-```text
-google.com → google
-xkqzpwrt.ru → xkqzpwrt
-```
-
-### Important Observation
-
-```text
-consecutive_consonants became more important than entropy
-```
-
-Human-created domains are typically pronounceable.  
-DGA-generated domains often are not.
-
----
-
 # Data Preprocessing
 
 The preprocessing pipeline included:
@@ -281,28 +176,28 @@ The preprocessing pipeline included:
 - Label encoding
 - Stratified train-test splitting
 
-### Why F1-Score?
+### Evaluation Metric
 
-F1-score was selected as the primary evaluation metric due to dataset imbalance.
+F1-score was selected as the primary metric due to dataset imbalance.
 
 ---
 
 # PCA Analysis
 
-Principal Component Analysis (PCA) was used to study feature variance and dimensionality behavior.
+Principal Component Analysis (PCA) was used to analyze feature variance and dimensionality behavior.
 
 ---
 
-## PCA Variance Analysis
+# PCA Variance Analysis
 
 <p align="center">
-  <img src="03_pca_variance.png" width="750">
+  <img src="./03_pca_variance.jpeg" width="750">
 </p>
 
-### PCA Findings
+### PCA Insights
 
-- Most variance was captured within the first few principal components
-- PCA demonstrated dimensionality reduction behavior
+- Most variance was captured within the first few components
+- PCA demonstrated dimensionality reduction concepts
 - Minimal compression benefit existed due to compact feature count
 
 ---
@@ -318,9 +213,7 @@ The following models were trained and compared.
 | Support Vector Machine (SVM) |
 | Artificial Neural Network (ANN / MLP) |
 
----
-
-## Train-Test Splits
+### Train-Test Splits
 
 ```text
 80:20
@@ -331,101 +224,57 @@ The following models were trained and compared.
 
 ---
 
-# Model Results
+# Model Performance
 
 ## Best Performing Model
 
 | Model | F1 Score |
 |---|---|
-| ANN / MLP | 0.8999 |
+| ANN / MLP | ~0.90 |
 
-ANN achieved the highest overall performance across experiments.
+The ANN/MLP model achieved the highest overall detection performance.
 
 ---
 
-## Confusion Matrix Comparison
+# Confusion Matrix Comparison
 
 <p align="center">
-  <img src="04_confusion_matrices.png" width="950">
+  <img src="./04_confusion_matrices.jpeg" width="950">
 </p>
 
-### Observation
-
-The ANN model achieved the lowest false positive rate among all tested models.
+The ANN model achieved the lowest false positive rate among all evaluated models.
 
 ---
 
 # PCA vs Full Feature Comparison
 
 <p align="center">
-  <img src="05_pca_comparison.png" width="700">
+  <img src="./05_pca_comparison.jpeg" width="700">
 </p>
 
-### Observation
-
-Results showed minimal difference between PCA-reduced features and the full feature set due to the compact nature of the dataset.
+PCA-reduced features showed minimal performance difference compared to the full feature set.
 
 ---
 
-# Random Forest Feature Importance
+# Feature Importance Analysis
 
 <p align="center">
-  <img src="06_feature_importance.png" width="700">
+  <img src="./06_feature_importance.jpeg" width="700">
 </p>
 
----
-
-## Important Finding
+### Important Insight
 
 Initially, entropy appeared to be the strongest indicator during EDA.
 
-However, Random Forest feature importance revealed:
+However, Random Forest feature importance analysis showed:
 
 ```text
 consecutive_consonants > entropy
 ```
 
-This demonstrated that unreadable consonant-heavy strings were stronger indicators of DGA-generated behavior than randomness alone.
+This revealed that unreadable consonant-heavy domains were stronger indicators of DGA-generated behavior than randomness alone.
 
----
-
-# F1 Score Heatmap
-
-<p align="center">
-  <img src="07_f1_heatmap.png" width="750">
-</p>
-
-### Observation
-
-The ANN/MLP model consistently achieved the best F1-score across multiple train-test splits.
-
----
-
-# Key Findings
-
-## 1. ANN achieved the best overall performance
-
-The neural network achieved approximately:
-
-```text
-90% F1-score
-```
-
-across evaluation experiments.
-
----
-
-## 2. Random Forest offered strong interpretability
-
-Random Forest provided detailed feature importance analysis while maintaining excellent performance with faster training time.
-
----
-
-## 3. Consecutive consonants were highly effective indicators
-
-Domains with long unreadable consonant sequences strongly correlated with DGA-generated behavior.
-
-### Example
+Example:
 
 ```text
 xkqzpwrtq.biz
@@ -433,39 +282,72 @@ xkqzpwrtq.biz
 
 ---
 
-## 4. Larger training splits improved consistency
+# F1 Score Heatmap
 
-The 80:20 split consistently produced the strongest results.
+<p align="center">
+  <img src="./07_f1_heatmap.jpeg" width="750">
+</p>
+
+The ANN/MLP model consistently achieved the best F1-score across multiple train-test splits.
+
+---
+
+# Challenges Faced
+
+One challenge during the project was handling the imbalance between legitimate and malicious domains.
+
+Since real-world DNS environments contain significantly more benign domains, selecting the correct evaluation metric became important.
+
+Another challenge was identifying which lexical features actually contributed most to detection performance.
+
+While entropy initially appeared highly important during EDA, feature importance analysis later revealed that consonant-heavy patterns were stronger indicators of DGA activity.
+
+---
+
+# Why This Matters for SOC Teams
+
+DNS-based threat detection plays an important role in modern Security Operations Centers (SOCs).
+
+This project demonstrates how Machine Learning can help analysts identify suspicious domains earlier in the attack lifecycle, even before deeper traffic analysis occurs.
+
+Potential applications include:
+
+- DNS threat monitoring
+- Malware infrastructure detection
+- SIEM enrichment
+- Blue team threat hunting
+- Early-stage anomaly detection
+
+---
+
+# Key Results
+
+✅ Processed 70,000 DNS domains  
+✅ Extracted 8 lexical features  
+✅ Trained and evaluated 4 ML models  
+✅ Achieved ~90% F1-score  
+✅ Performed EDA, PCA, and feature importance analysis  
+✅ Applied Machine Learning concepts to cybersecurity threat detection  
 
 ---
 
 # Skills Demonstrated
 
-- Cybersecurity-focused machine learning
-- DNS anomaly detection
-- DGA analysis
-- Feature engineering
+- Machine Learning
+- Cybersecurity Analytics
+- DNS Security
+- Threat Detection
+- Feature Engineering
 - Exploratory Data Analysis (EDA)
-- Data preprocessing
-- PCA analysis
-- Model evaluation
-- F1-score analysis
-- Python-based ML workflows
-- Security analytics
-
----
-
-# Tools & Technologies
-
-| Technology |
-|---|
-| Python |
-| Pandas |
-| NumPy |
-| Scikit-learn |
-| Matplotlib |
-| Seaborn |
-| Jupyter Notebook |
+- PCA Analysis
+- Model Evaluation
+- F1-score Analysis
+- Random Forest
+- ANN / MLP
+- Python
+- Scikit-learn
+- Data Preprocessing
+- Blue Team Security Concepts
 
 ---
 
@@ -484,7 +366,7 @@ Potential future enhancements include:
 
 # Getting Started
 
-## Requirements
+## Install Requirements
 
 ```bash
 pip install pandas numpy scikit-learn matplotlib seaborn jupyter
@@ -492,7 +374,7 @@ pip install pandas numpy scikit-learn matplotlib seaborn jupyter
 
 ---
 
-## Run the Project
+## Run the Notebook
 
 ```bash
 jupyter notebook
@@ -508,32 +390,32 @@ Run all notebook cells.
 
 ---
 
-# Conclusion
-
-This project demonstrated how machine learning can support cybersecurity operations by identifying malicious DGA-generated domains using only lexical and statistical domain features.
-
-Even without DNS traffic analysis or packet captures, the models successfully distinguished legitimate domains from malicious domains with strong performance.
-
-The project combines practical machine learning workflows with real-world cybersecurity threat detection concepts relevant to SOC operations and blue team environments.
-
----
 # Presentation
 
-📺 Full Project Presentation & Walkthrough:
+YouTube Presentation Link:
 
-[![Watch the Presentation](https://img.shields.io/badge/YouTube-Project%20Presentation-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=BRD8PHBkOSc)
+https://www.youtube.com/watch?v=BRD8PHBkOSc
 
-This presentation covers:
+The presentation includes:
 
 - Project overview
 - DGA threat explanation
 - Dataset collection
 - Feature engineering
-- Exploratory Data Analysis (EDA)
+- EDA analysis
 - PCA analysis
-- Model training & evaluation
-- Feature importance analysis
-- Final results & findings
+- Model evaluation
+- Final findings
+
+---
+
+# Conclusion
+
+This project demonstrated how Machine Learning can support cybersecurity operations by identifying malicious DGA-generated domains using only lexical and statistical features.
+
+Even without packet captures or network traffic analysis, the models successfully distinguished legitimate domains from malicious domains with strong performance.
+
+The project combines practical Machine Learning workflows with real-world cybersecurity threat detection concepts relevant to SOC operations and blue team security analysis.
 
 ---
 
@@ -545,5 +427,3 @@ This presentation covers:
 - Alexa Top Sites
 
 ---
-
-
